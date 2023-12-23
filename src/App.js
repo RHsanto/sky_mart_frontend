@@ -6,6 +6,7 @@ import Login from "./components/Home/Authentication/Login";
 import Registration from "./components/Home/Authentication/Registration";
 import Navbar from "./components/Home/Common/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
+import ShoppingCart from "./components/Home/ShoppingCart";
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <ShoppingCart />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

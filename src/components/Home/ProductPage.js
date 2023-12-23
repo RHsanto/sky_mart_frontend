@@ -1,37 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { RiAddCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const ProductPage = () => {
-  const items = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-  ];
+  const [products, setProducts] = useState([]);
+  const { dispatch } = useCart();
+
+  // Function to add a product to the cart
+  const addToCart = product => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+
+  // Fetch the products from the server on component mount
+  useEffect(() => {
+    fetch("http://localhost:8000/products")
+      .then(res => res.json())
+      .then(data => setProducts(data));
+  }, []);
+
   return (
-    <div className="container mx-auto p-10 h-[1500px]">
-      <h1 className="text-3xl font-bold my-5">All Product</h1>
-      <div className="grid grid-cols-4 gap-8">
-        {items.map(item => (
-          <div key={item?.id}>
-            <div className="card card-compact  bg-gray-100 ">
+    <div className="container mx-auto p-10 ">
+      <h1 className="text-3xl font-bold mb-10">
+        All <span className="text-sky-500">Product</span>
+      </h1>
+      <div className="lg:grid grid-cols-4 gap-8">
+        {/* Map through the products and render a card for each */}
+        {products.map(product => (
+          <div key={product?._id}>
+            <div className="card card-compact  bg-gray-100 h-[500px] mb-10 lg:mb-0">
               <figure>
-                <img src="https://i.ibb.co/y0wnkkd/8.png" alt="Shoes" />
+                <img src={product?.image} alt={product?.title} />
               </figure>
               <div className="card-body bg-white border rounded-b-xl">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-between items-center">
+                <h2 className="card-title">{product?.title}</h2>
+                <p>{product?.description.slice(0, 60)}</p>
+                <div className="card-actions mt-5 justify-between items-center">
                   <div>
-                    {" "}
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline ml-2">Products</div>
+                    {/* Button to add the product to the cart */}
+                    <button onClick={() => addToCart(product)} className="btn ">
+                      <RiAddCircleFill className="text-lg" /> Add to cart
+                    </button>
                   </div>
-                  <Link to={`/product/${item?.id}`}>
+                  {/* Button to view product details */}
+                  <Link to={`/product/${product?._id}`}>
                     <button className="btn btn-info text-white">Details</button>
                   </Link>
                 </div>
