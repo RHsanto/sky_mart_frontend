@@ -17,7 +17,7 @@ const ProductPage = () => {
       <h1 className="text-3xl font-bold my-5">All Product</h1>
       <div className="grid grid-cols-4 gap-8">
         {items.map(item => (
-          <div>
+          <div key={item?.id}>
             <div className="card card-compact  bg-gray-100 ">
               <figure>
                 <img src="https://i.ibb.co/y0wnkkd/8.png" alt="Shoes" />

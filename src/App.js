@@ -5,15 +5,40 @@ import ProductDetails from "./components/Home/ProductDetails";
 import Login from "./components/Home/Authentication/Login";
 import Registration from "./components/Home/Authentication/Registration";
 import Navbar from "./components/Home/Common/Navbar";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product"
+          element={
+            <PrivateRoute>
+              {" "}
+              <ProductPage />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <PrivateRoute>
+              {" "}
+              <ProductDetails />{" "}
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
       </Routes>
