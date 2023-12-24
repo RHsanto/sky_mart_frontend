@@ -15,7 +15,7 @@ const Registration = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/auth/register", {
+      const response = await axios.post("https://sky-mart-servers.onrender.com/auth/register", {
         email,
         password,
         userName,

@@ -15,7 +15,7 @@ const ProductDetails = () => {
 
   // Fetch the product details from the server based on the 'id' parameter
   useEffect(() => {
-    fetch(`http://localhost:8000/product/${id}`)
+    fetch(`https://sky-mart-servers.onrender.com/product/${id}`)
       .then(res => res.json())
       .then(data => setProduct(data));
   }, [id]);

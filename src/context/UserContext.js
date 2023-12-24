@@ -20,7 +20,9 @@ const UserProvider = ({ children }) => {
     if (token) {
       setUserData(true);
       axios
-        .get("http://localhost:8000/auth/user", { headers: { authorization: token } })
+        .get("https://sky-mart-servers.onrender.com/auth/user", {
+          headers: { authorization: token },
+        })
         .then(res => {
           if (res.data?.user) {
             setUserData(res.data?.user);

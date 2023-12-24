@@ -14,7 +14,7 @@ const ProductPage = () => {
 
   // Fetch the products from the server on component mount
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch("https://sky-mart-servers.onrender.com/products")
       .then(res => res.json())
       .then(data => setProducts(data));
   }, []);

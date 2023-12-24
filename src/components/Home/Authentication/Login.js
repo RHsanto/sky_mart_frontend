@@ -13,7 +13,7 @@ const Login = () => {
   const redirect_uri = location.state?.from || "/";
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
+      const response = await axios.post("https://sky-mart-servers.onrender.com/auth/login", {
         email,
         password,
       });
