@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Define the initial state
 const initialState = {
   cart: [],
@@ -31,13 +32,12 @@ const cartReducer = (state, action) => {
         ...state,
         cart: clearCart(),
       };
-
     default:
       return state;
   }
 };
 
-//  function to add a product to the cart
+// Helper function to add a product to the cart
 const addToCart = (cart, productToAdd) => {
   const existingProduct = cart.find(item => item._id === productToAdd._id);
 
@@ -45,29 +45,50 @@ const addToCart = (cart, productToAdd) => {
     existingProduct.quantity += 1;
   } else {
     cart.push({ ...productToAdd, quantity: 1 });
+    toast.success("Successfully Add to cart", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  saveCartToLocalStorage(cart);
   return [...cart];
 };
 
-//function to remove a product from the cart
+// Helper function to remove a product from the cart
 const removeFromCart = (cart, productIdToRemove) => {
   const updatedCart = cart.filter(item => item._id !== productIdToRemove);
-  localStorage.setItem("cart", JSON.stringify(updatedCart));
+  saveCartToLocalStorage(updatedCart);
   return [...updatedCart];
 };
 
-//  function to clear the cart
+// Helper function to clear the cart
 const clearCart = () => {
   const updatedCart = [];
-  localStorage.setItem("cart", JSON.stringify(updatedCart));
+  saveCartToLocalStorage(updatedCart);
   return [...updatedCart];
+};
+
+// Helper function to save the cart to localStorage
+const saveCartToLocalStorage = cart => {
+  localStorage.setItem("cart", JSON.stringify(cart));
 };
 
 // Create a CartProvider component
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [state, dispatch] = useReducer(cartReducer, initialState, () => {
+    const savedCart = localStorage.getItem("cart");
+    return {
+      cart: savedCart ? JSON.parse(savedCart) : [],
+    };
+  });
+
   return <CartContext.Provider value={{ state, dispatch }}>{children}</CartContext.Provider>;
 };
 
@@ -79,4 +100,6 @@ export const useCart = () => {
   }
   return context;
 };
+
+// Action creator for clearing the cart
 export const clearCartAction = () => ({ type: CLEAR_CART });

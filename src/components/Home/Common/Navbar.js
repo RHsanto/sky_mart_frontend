@@ -21,9 +21,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="border-b p-5">
+    <div className="border-b p-5 top-0 z-[9999] bg-white sticky">
       {/* Navbar container */}
-      <div className="navbar_items container mx-auto  flex justify-between items-center">
+      <div className=" navbar_items container mx-auto  flex justify-between items-center">
         {/* Logo and home link */}
         <div>
           {" "}

@@ -7,11 +7,13 @@ import Registration from "./components/Home/Authentication/Registration";
 import Navbar from "./components/Home/Common/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import ShoppingCart from "./components/Home/ShoppingCart";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <Router>
       <Navbar />
+      <ToastContainer />
       <Routes>
         <Route
           path="/"
